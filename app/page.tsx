@@ -1,3 +1,11 @@
+import Navbar from "@/components/home/Navbar";
+import Hero from "@/components/home/Hero";
+
 export default function Home() {
-  return <h1>Hello Euphoria</h1>;
+  return (
+    <>
+      <Navbar />
+      <Hero />
+    </>
+  );
 }
