@@ -1,13 +1,19 @@
 type Props = {
   label: string;
   placeholder: string;
+  value: string;
+  onChange: (value: string) => void;
   type?: string;
+  error?: string;
 };
 
 export default function TextInput({
   label,
   placeholder,
+  value,
+  onChange,
   type = "text",
+  error,
 }: Props) {
   return (
     <div className="space-y-2">
@@ -17,23 +23,33 @@ export default function TextInput({
 
       <input
         type={type}
+        value={value}
         placeholder={placeholder}
-        className="
+        onChange={(e) => onChange(e.target.value)}
+        className={`
           w-full
           rounded-2xl
           border
-          border-white/10
-          bg-white/5
           px-5
           py-4
+          bg-white/5
           text-white
           placeholder:text-zinc-500
           outline-none
-          transition
-          focus:border-violet-500
-          focus:bg-white/10
-        "
+          transition-all
+          ${
+            error
+              ? "border-red-500"
+              : "border-white/10 focus:border-violet-500"
+          }
+        `}
       />
+
+      {error && (
+        <p className="text-sm text-red-400">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

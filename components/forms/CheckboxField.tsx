@@ -1,4 +1,4 @@
-"use client";
+import Link from "next/link";
 
 type Props = {
   checked: boolean;
@@ -10,29 +10,22 @@ export default function CheckboxField({
   onChange,
 }: Props) {
   return (
-    <label className="flex cursor-pointer items-start gap-3">
+    <label className="flex items-start gap-3 text-sm text-zinc-300">
       <input
         type="checkbox"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
-        className="
-          mt-1
-          h-5
-          w-5
-          rounded
-          accent-violet-600
-        "
+        className="mt-1 h-4 w-4 accent-violet-600"
       />
 
-      <span className="text-sm leading-6 text-zinc-400">
+      <span>
         I have read and agree to the{" "}
-        <a
+        <Link
           href="/terms"
-          target="_blank"
-          className="font-medium text-violet-400 hover:underline"
+          className="text-violet-400 hover:underline"
         >
           Terms & Conditions
-        </a>
+        </Link>
       </span>
     </label>
   );
