@@ -1,7 +1,8 @@
-import { CalendarDays, Clock3, MapPin } from "lucide-react";
+import TicketCard from "@/components/ui/TicketCard";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/layout/Container";
 import { EVENT } from "@/constants/event";
+import { UI } from "@/constants/ui";
 
 export default function Hero() {
   return (
@@ -16,7 +17,7 @@ export default function Hero() {
           <div>
 
             <p className="mb-4 uppercase tracking-[0.45em] text-violet-400">
-              Freshers' Party
+             {UI.hero.badge}
             </p>
 
             <h1 className="text-6xl font-black leading-none md:text-8xl">
@@ -30,48 +31,14 @@ export default function Hero() {
             <Button
               className="mt-10 h-14 rounded-full px-8 text-base"
             >
-              Get Your Pass →
+              {UI.hero.cta}
             </Button>
 
           </div>
 
           {/* RIGHT */}
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
-
-            <p className="text-sm uppercase tracking-[0.35em] text-violet-400">
-              Early Bird
-            </p>
-
-            <h2 className="mt-4 text-6xl font-black">
-              ₹{EVENT.earlyBirdPrice}
-            </h2>
-
-            <p className="mt-2 text-zinc-400">
-              Limited-Time Price
-            </p>
-
-            <div className="mt-10 space-y-5">
-
-              <div className="flex items-center gap-3">
-                <CalendarDays className="h-5 w-5 text-violet-400" />
-                <span>
-                  {EVENT.date} • {EVENT.day}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <Clock3 className="h-5 w-5 text-violet-400" />
-                <span>{EVENT.time}</span>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <MapPin className="h-5 w-5 text-violet-400" />
-                <span>{EVENT.venue}</span>
-              </div>
-
-            </div>
-
-          </div>
+          {/* RIGHT */}
+        <TicketCard />
 
         </div>
       </Container>

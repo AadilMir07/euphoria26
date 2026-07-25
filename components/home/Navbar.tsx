@@ -1,17 +1,42 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import Container from "@/components/layout/Container";
 
 export default function Navbar() {
   return (
-    <header className="fixed top-0 left-0 w-full z-50">
-      <Container className="flex items-center justify-between py-6">
-        <h1 className="text-xl font-bold tracking-widest text-white">
-          EUPHORIA
-        </h1>
+    <header className="fixed top-6 left-0 z-50 w-full">
+      <Container>
 
-        <Button className="rounded-full px-6">
-          Register
-        </Button>
+        <div
+          className="
+            flex items-center justify-between
+            rounded-full
+            border border-white/10
+            bg-white/5
+            px-7 py-4
+            backdrop-blur-xl
+            shadow-[0_0_40px_rgba(139,92,246,0.08)]
+        "
+        >
+          <h1 className="text-lg font-bold tracking-[0.25em] text-white">
+            EUPHORIA
+          </h1>
+
+          <Button
+            className="
+              rounded-full
+              bg-violet-600
+              px-6
+              hover:bg-violet-500
+              transition-all
+            "
+          >
+            Register
+          </Button>
+
+        </div>
+
       </Container>
     </header>
   );
