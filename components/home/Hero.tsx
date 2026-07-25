@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import Container from "@/components/layout/Container";
 import { EVENT } from "@/constants/event";
 import { UI } from "@/constants/ui";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -28,11 +29,11 @@ export default function Hero() {
               {EVENT.tagline}
             </p>
 
-            <Button
-              className="mt-10 h-14 rounded-full px-8 text-base"
-            >
-              {UI.hero.cta}
-            </Button>
+            <Link href="/register">
+                <Button className="mt-10 h-14 rounded-full px-8 text-base">
+                    {UI.hero.cta}
+                </Button>
+            </Link>
 
           </div>
 

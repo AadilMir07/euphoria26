@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import Container from "@/components/layout/Container";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -23,17 +24,19 @@ export default function Navbar() {
             EUPHORIA
           </h1>
 
-          <Button
-            className="
-              rounded-full
-              bg-violet-600
-              px-6
-              hover:bg-violet-500
-              transition-all
-            "
-          >
-            Register
-          </Button>
+        <Link href="/register">
+            <Button
+                className="
+                r ounded-full
+                bg-violet-600
+                px-6
+                hover:bg-violet-500
+                transition-all
+                 "
+                >
+                Register
+            </Button>
+        </Link>
 
         </div>
 
