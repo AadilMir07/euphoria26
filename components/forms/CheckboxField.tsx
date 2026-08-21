@@ -22,6 +22,8 @@ export default function CheckboxField({
         I have read and agree to the{" "}
         <Link
           href="/terms"
+          target="_blank"
+          rel="noopener noreferrer"
           className="text-violet-400 hover:underline"
         >
           Terms & Conditions

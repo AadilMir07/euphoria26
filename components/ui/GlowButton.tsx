@@ -6,15 +6,21 @@ import { Button } from "./button";
 type Props = {
   children: React.ReactNode;
   disabled?: boolean;
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
 };
 
 export default function GlowButton({
   children,
   disabled = false,
+  onClick,
+  type = "button",
 }: Props) {
   return (
     <Button
+      type={type}
       disabled={disabled}
+      onClick={onClick}
       className={`
         h-14
         w-full
@@ -23,7 +29,6 @@ export default function GlowButton({
         text-base
         transition-all
         duration-300
-
         ${
           disabled
             ? "cursor-not-allowed bg-zinc-700 text-zinc-400"

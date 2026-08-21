@@ -3,7 +3,7 @@ export const EVENT = {
 
   tagline: "New Faces. New Friends. One Unforgettable Night.",
 
-  date: "29 August 2026",
+  date: "5 September 2026",
 
   day: "Saturday",
 
@@ -11,9 +11,9 @@ export const EVENT = {
 
   venue: "Mad Over Grills - Restaurant & Banquet Hall, Gotri",
 
-  earlyBirdPrice: 749,
+  price: 899,
 
-  regularPrice: 849,
+  
 
   upiId: "aadilmir1208@okicici",
 

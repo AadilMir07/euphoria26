@@ -1,0 +1,45 @@
+rules_version = '2';
+
+// Copy this into: Firebase Console → Firestore Database → Rules
+// (free — no paid plan required, this is just config)
+//
+// Model: only your manually-created admin accounts sign in via
+// Firebase Auth (there's no public signup flow), so
+// `request.auth.token.admin == true` is a safe stand-in for "is an admin".
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /registrations/{registrationId} {
+
+      // Anyone can submit a NEW registration (the public form has
+      // no login), but only with the exact fields the form sends,
+      // correct types, and a fixed starting status — so nobody can
+      // write extra fields or self-approve their own payment.
+      allow create: if
+        request.resource.data.keys().hasOnly([
+          'fullName', 'enrollmentId', 'phone', 'email',
+          'school', 'programme', 'year',
+          'paymentScreenshot', 'paymentStatus', 'createdAt'
+        ]) &&
+        request.resource.data.fullName is string &&
+        request.resource.data.enrollmentId is string &&
+        request.resource.data.phone is string &&
+        request.resource.data.email is string &&
+        request.resource.data.school is string &&
+        request.resource.data.programme is string &&
+        request.resource.data.year is string &&
+        request.resource.data.paymentScreenshot is string &&
+        request.resource.data.paymentStatus == 'Pending';
+
+      // Reading a registration, updating its status, or deleting
+      // it requires an authenticated (admin) session — the public
+      // site never reads this collection back.
+      allow read, delete: if request.auth.token.admin == true;
+
+      allow update: if
+        request.auth.token.admin == true &&
+        request.resource.data.diff(resource.data)
+          .affectedKeys().hasOnly(['paymentStatus']);
+    }
+  }
+}
