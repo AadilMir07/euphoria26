@@ -23,6 +23,8 @@ function getLocalNetworkIPs(): string[] {
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: getLocalNetworkIPs(),
+
+  serverExternalPackages: ["firebase-admin"],
 };
 
 export default nextConfig;
