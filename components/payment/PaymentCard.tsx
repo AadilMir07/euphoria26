@@ -84,10 +84,14 @@ export default function PaymentCard({
     try {
       setLoading(true);
 
-      const alreadyRegistered =
-        await enrollmentExists(
-          registration.enrollmentId.trim()
-        );
+      console.log("STEP 1: Checking enrollment ID...");
+
+const alreadyRegistered =
+  await enrollmentExists(
+    registration.enrollmentId.trim()
+  );
+
+console.log("STEP 1 DONE: Enrollment check result:", alreadyRegistered);
 
       if (alreadyRegistered) {
         alert(
@@ -96,8 +100,12 @@ export default function PaymentCard({
         return;
       }
 
-      const uploadResult =
-        await uploadPaymentScreenshot(selectedFile);
+      console.log("STEP 2: Starting Cloudinary upload...");
+
+const uploadResult =
+  await uploadPaymentScreenshot(selectedFile);
+
+console.log("STEP 2 DONE: Cloudinary result:", uploadResult);
 
       if (!uploadResult?.secure_url) {
         throw new Error(
@@ -105,6 +113,7 @@ export default function PaymentCard({
         );
       }
 
+      console.log("STEP 3: Saving registration to Firestore...");
       await saveRegistration({
         ...registration,
         enrollmentId:
@@ -119,6 +128,7 @@ export default function PaymentCard({
           uploadResult.secure_url,
         paymentStatus: "Pending",
       });
+      console.log("STEP 3 DONE: Registration saved to Firestore.");
 
       clearRegistration();
 
