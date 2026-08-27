@@ -1,11 +1,8 @@
 import {
-  addDoc,
   collection,
   getDocs,
   query,
-  serverTimestamp,
   where,
-  type Timestamp,
 } from "firebase/firestore";
 
 import { db } from "@/lib/firestore";
@@ -22,10 +19,10 @@ export interface StoredRegistration extends SavedRegistration {
 }
 
 /**
- * Save a completed registration to Firestore.
+ * Save a completed registration through the server API.
  *
- * The registration document is only created after the payment
- * screenshot has successfully been uploaded.
+ * The Firestore write is performed by Firebase Admin on the
+ * server instead of directly from the browser.
  */
 export async function saveRegistration(
   data: SavedRegistration
@@ -41,36 +38,53 @@ export async function saveRegistration(
     year: data.year.trim(),
     paymentScreenshot: data.paymentScreenshot.trim(),
     paymentStatus: data.paymentStatus,
-    createdAt: serverTimestamp(),
   };
 
-  console.log("🔥 FIRESTORE: attempting addDoc");
+  console.log("🔥 REGISTRATION API: sending registration...");
 
-try {
-  const result = await addDoc(
-    collection(db, "registrations"),
-    registration
-  );
+  try {
+    const response = await fetch("/api/registration", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(registration),
+    });
 
-  console.log("🔥 FIRESTORE: SUCCESS", result.id);
+    const result = await response.json();
 
-  return result;
-} catch (error) {
-  console.error("🔥 FIRESTORE: FAILED", error);
-  throw error;
-}
+    if (!response.ok) {
+      throw new Error(
+        result?.error || "Failed to save registration."
+      );
+    }
+
+    console.log(
+      "🔥 REGISTRATION API: SUCCESS",
+      result.id
+    );
+
+    return result;
+  } catch (error) {
+    console.error(
+      "🔥 REGISTRATION API: FAILED",
+      error
+    );
+
+    throw error;
+  }
 }
 
 /**
  * Check whether an Enrollment ID already exists.
  *
- * Trimming here keeps this check consistent with the value
- * stored by saveRegistration().
+ * This remains a browser-side Firestore read for now.
  */
 export async function enrollmentExists(
   enrollmentId: string
 ) {
-  const normalizedEnrollmentId = enrollmentId.trim();
+  const normalizedEnrollmentId =
+    enrollmentId.trim();
 
   if (!normalizedEnrollmentId) {
     return false;
