@@ -44,10 +44,21 @@ export async function saveRegistration(
     createdAt: serverTimestamp(),
   };
 
-  return addDoc(
+  console.log("🔥 FIRESTORE: attempting addDoc");
+
+try {
+  const result = await addDoc(
     collection(db, "registrations"),
     registration
   );
+
+  console.log("🔥 FIRESTORE: SUCCESS", result.id);
+
+  return result;
+} catch (error) {
+  console.error("🔥 FIRESTORE: FAILED", error);
+  throw error;
+}
 }
 
 /**
